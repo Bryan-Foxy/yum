@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu Spécial pour Jesss</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            text-align: center;
+            background-color: #fff5f7;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .question-container {
+            margin-top: 20px;
+        }
+        button {
+            display: block;
+            width: 80%;
+            padding: 10px;
+            margin: 10px auto;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6f61;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff4040;
+        }
+        .emoji {
+            font-size: 50px;
+        }
+        h1, h2, h3, p {
+            color: #ff6f61;
+        }
+        iframe {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <h1>Hey Jesss ! 👋</h1>
+        <p>Que fais tu ?</p>
+        <p>Tu es un peu occupée / Are you busy?, non ?</p>
+        <button onclick="handleBusy(true)">Ouais, un peu, 🤨</button>
+        <button onclick="handleBusy(false)">Non, je suis libre ! 😏</button>
+    </div>
+
+    <div id="busy-screen" class="hidden">
+        <h1>Dommage... 😢</h1>
+        <p class="emoji">🙁</p>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <h2>🎤 On va faire un petit test sur MJ, l'artiste préféré de Bryannnnnn 🎤</h2>
+        <h3>Histoire de te faire réflechir et également de te donner le sourire! 😊</h3>
+        <div id="question-container" class="question-container">
+            <!-- Questions seront injectées ici -->
+        </div>
+    </div>
+
+    <div id="end-screen" class="hidden">
+        <h2>🎶 Et pour finir, j'ai une dernière surprise pour toi... 🎶</h2>
+        <p>Qu'est-ce que tu en penses, Jess ? Ça te fait plaisir ?</p>
+        <p><a href="https://www.youtube.com/watch?v=W-apaIOOoAo" target="_blank">Clique ici pour terminer le Jeu et ce que Bryan pense 👉🏿👈🏿</a></p>
+    </div>
+
+    <footer>
+        Petit Jeu réservé pour Jess, la plus belle pomme du pommier 🍎<br>
+        Jeu réalisé en Juillet 2024
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "Dans quelle chanson Michael Jackson évoque-t-il la responsabilité personnelle pour améliorer le monde ?",
+                options: ["Heal the World", "Man in the Mirror", "Earth Song"],
+                answer: 1
+            },
+            {
+                question: "Quel titre de Michael Jackson aborde la solitude et le besoin de soutien émotionnel ?",
+                options: ["You Are Not Alone", "Human Nature", "Remember the Time"],
+                answer: 0
+            },
+            {
+                question: "Dans quelle chanson Michael Jackson parle-t-il d'une amitié inébranlable avec la métaphore d'un animal de compagnie ?",
+                options: ["Ben", "Will You Be There", "Gone Too Soon"],
+                answer: 0
+            },
+            {
+                question: "Quelle chanson de Michael Jackson contient les paroles 'If you wanna make the world a better place, take a look at yourself and make a change' ?",
+                options: ["Man in the Mirror", "Black or White", "Heal the World"],
+                answer: 0
+            },
+            {
+                question: "Dans quelle chanson Michael Jackson parle-t-il d'une perte émotionnelle avec la phrase 'She was more like a beauty queen from a movie scene' ?",
+                options: ["Billie Jean", "She's Out of My Life", "The Way You Make Me Feel"],
+                answer: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function handleBusy(isBusy) {
+            if (isBusy) {
+                document.getElementById('start-screen').classList.add('hidden');
+                document.getElementById('busy-screen').classList.remove('hidden');
+            } else {
+                document.getElementById('start-screen').classList.add('hidden');
+                document.getElementById('quiz-screen').classList.remove('hidden');
+                showQuestion();
+            }
+        }
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                const q = questions[currentQuestion];
+                const container = document.getElementById('question-container');
+                container.innerHTML = `
+                    <p>${q.question}</p>
+                    <div class="options">
+                        ${q.options.map((option, index) => `<button onclick="checkAnswer(${index})">${option}</button>`).join('')}
+                    </div>
+                `;
+            } else {
+                document.getElementById('quiz-screen').classList.add('hidden');
+                document.getElementById('end-screen').classList.remove('hidden');
+            }
+        }
+
+        function checkAnswer(selected) {
+            const q = questions[currentQuestion];
+            if (selected === q.answer) {
+                alert("Yessss ! Bryan aurait dit la même chose ! 😎");
+                currentQuestion++;
+                showQuestion();
+            } else {
+                alert("Bryan n'aurait pas dit ça en tout cas... 😅");
+            }
+        }
+    </script>
+
+</body>
+</html>
